@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.oktaSignIn.session.close(() => { this.router.navigate(['login'] ); } );
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || null;
+    this.showLogin();
   }
 
   showLogin() {
