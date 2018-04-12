@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { Okta } from './services/okta.service';
 import { OktaAuthGuard } from './services/app.guard';
+import { SsprService } from './services/sspr.service';
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -27,11 +29,13 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
     Okta,
-    OktaAuthGuard
+    OktaAuthGuard,
+    SsprService
   ],
   bootstrap: [AppComponent]
 })

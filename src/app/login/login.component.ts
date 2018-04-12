@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Okta } from '../services/okta.service';
+import {SsprService} from '../services/sspr.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private changeDetectorRef: ChangeDetectorRef,
               private router: Router,
-              private okta: Okta) {
+              private okta: Okta,
+              private sspr: SsprService) {
       this.oktaSignIn = okta.getWidget();
   }
 
@@ -34,6 +36,8 @@ export class LoginComponent implements OnInit {
         this.oktaSignIn.tokenManager.add('idToken', response[0]);
         this.oktaSignIn.tokenManager.add('accessToken', response[1]);
         this.oktaSignIn.remove();
+        // check for sms config for SSPR
+        this.sspr.checkAccount().subscribe(resp => console.log(resp));
         this.changeDetectorRef.detectChanges();
         if (this.returnUrl) {
           // redirect to returnUrl.  This case handles the case of sp-initiated sign-on.
